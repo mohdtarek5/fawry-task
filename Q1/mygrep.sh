@@ -2,12 +2,11 @@
 #allow the use of commands like -v and -n and a combination of both
 #handle errors when no string is given with a prompt message
 
-
 #first variable = command
 #second variable = string check
 #third variable = filename
 
-#if 3rd variable = null 
+#if 3rd variable = null
 #set variable as 1st string
 #2nd variable as filename
 #else if 3 variables 1st is command 2nd is string 3rd filename
@@ -57,10 +56,19 @@ if [[ "$invertWords" == true || "$lineNumbers" == true ]]; then
     echo "file name: $fileName"
     echo "At least one of the flags (invertWords or lineNumbers) is set to true."
 else
+    flag="none"
     wordToCheck="$1"
     fileName="$2"
+    echo "flag: $flag"
     echo "matching word: $wordToCheck"
     echo "file name: $fileName"
     echo "Neither invertWords nor lineNumbers is set to true."
 fi
 
+while IFS= read -r line; do
+
+    if [[ "${line,,}" == *"${wordToCheck,,}"* ]]; then
+        echo "Found '$wordToCheck' in line: $line"
+
+    fi
+done <"$fileName"
