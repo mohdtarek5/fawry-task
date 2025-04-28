@@ -25,3 +25,11 @@
 #if not matching put in variable invertedWords
 
 #if there is time implement bonus task
+
+
+if [ "$#" -lt 2 ]; then
+  echo "invalid number of arguments"
+  exit 1
+fi
+
+
