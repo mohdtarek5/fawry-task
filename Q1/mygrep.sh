@@ -42,15 +42,16 @@ if [[ "$1" =~ ^- ]]; then
         exit 1
         ;;
     esac
+    shift
 fi
 
-if [ -z "$2" ]; then
+wordtocheck="$1"
+filename="$2"
+
+if [ -z "$wordtocheck" ]; then
     echo "Error: Missing search string. Please provide a word to search for."
     exit 1
 fi
-
-wordtocheck="$2"
-filename="$3"
 
 if [ -z "$filename" ]; then
     echo "Error: Missing filename. Please provide a file to search in."
