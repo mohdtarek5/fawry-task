@@ -47,7 +47,8 @@ fi
 echo "Line numbers flag set to: $displayline"
 echo "Invert words flag set to: $invertwords"
 
-if [[ "$invertwords" == true || "$displayline" == true ]]; then
+if [[ "$invertwords" = true || "$displayline" = true ]]; then
+
     flag="$1"
     wordtocheck="$2"
     filename="$3"
@@ -56,6 +57,7 @@ if [[ "$invertwords" == true || "$displayline" == true ]]; then
     echo "file name: $filename"
     echo "At least one of the flags (invertwords or displayline) is set to true."
 else
+
     flag="none"
     wordtocheck="$1"
     filename="$2"
@@ -67,14 +69,31 @@ fi
 
 linenumber=0
 
-while IFS= read -r line; do
-    ((linenumber++))
-    if [[ "${line,,}" == *"${wordtocheck,,}"* ]]; then
-        if [ "$displayline" = true ]; then
-            echo "Found '$wordtocheck' in line $linenumber; $line "
-        else
-            echo "Found '$wordtocheck' in line $line "
+if [ "$invertwords" = false ]; then
+    echo "Processing file with invertwords=false..."
+    while IFS= read -r line; do
+        ((linenumber++))
+        if [[ "${line,,}" == *"${wordtocheck,,}"* ]]; then
+            if [ "$displayline" = true ]; then
+                echo "Found '$wordtocheck' in line $linenumber; $line"
+            else
+                echo "Found '$wordtocheck' in line $line"
+            fi
         fi
+    done <"$filename"
+fi
 
-    fi
-done <"$filename"
+if [ "$invertwords" = true ]; then
+    echo "Processing file with invertwords=true..."
+    while IFS= read -r line; do
+        ((linenumber++))
+
+        if [[ "${line,,}" != *"${wordtocheck,,}"* ]]; then
+            if [ "$displayline" = true ]; then
+                echo "in line $linenumber; $line"
+            else
+                echo "in line $line"
+            fi
+        fi
+    done <"$filename"
+fi
