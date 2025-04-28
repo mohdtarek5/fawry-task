@@ -6,4 +6,6 @@ next step is to  try and reselove internal.example.com by using the configured D
 
 it failed which means that the problem is in the internal DNS config, to resolve: we try and use Google dns server, we get the same error which means both methods failed leading to a web server issue
 
-next step is to use the curl tool for ports 80 or 443, both failed which might indicate that a firewall is blocking access
+next step is to use the curl tool for ports 80 or 443, both failed which might indicate that a firewall is blocking access.
+we check if the service is listening on the correct ports by running sudo netstat -tuln | grep ':80\|:443'
+it gave no output which means that there is no active service that is listening on the ports, which indicates that it is a web server or service problem
