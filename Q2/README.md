@@ -6,3 +6,4 @@ next step is to  try and reselove internal.example.com by using the configured D
 
 it failed which means that the problem is in the internal DNS config, to resolve: we try and use Google dns server, we get the same error which means both methods failed leading to a web server issue
 
+next step is to use the curl tool for ports 80 or 443, both failed which might indicate that a firewall is blocking access
