@@ -58,16 +58,9 @@ if [ -z "$filename" ]; then
     exit 1
 fi
 
-echo "Line numbers flag set to: $displayline"
-echo "Invert words flag set to: $invertwords"
-echo "matching word: $wordtocheck"
-echo "file name: $filename"
-echo "At least one of the flags (invertwords or displayline) is set to true."
-
 linenumber=0
 
 if [ "$invertwords" = false ]; then
-    echo "Processing file with invertwords=false..."
     while IFS= read -r line; do
         ((linenumber++))
         if [[ "${line,,}" == *"${wordtocheck,,}"* ]]; then
@@ -81,7 +74,6 @@ if [ "$invertwords" = false ]; then
 fi
 
 if [ "$invertwords" = true ]; then
-    echo "Processing file with invertwords=true..."
     while IFS= read -r line; do
         if [[ "${line,,}" != *"${wordtocheck,,}"* ]]; then
             if [ "$displayline" = true ]; then
