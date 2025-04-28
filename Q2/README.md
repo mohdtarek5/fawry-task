@@ -26,5 +26,58 @@ curl http://<server-ip>
     curl http://localhost
 - if i get a page back then its running fine on localhost
 
+## Now to list the possible causes:
+
+1- DNS: 
+- Missing or incorrect DNS record
+- Wrong DNS server configuration
+- Stale DNS cache on client/server
+- Missing /etc/hosts entry
+
+2- Network: 
+- None since IP is reachable
+
+3- Service:
+- None service is running fine and responsive
+
+## possible fixes: 
+- DNS issues:
+
+- Missing DNS record
+ dig internal.example.com
+Cause: If no A record returned ⇒ problem confirmed.
+to fix: update DNS server by adding: internal.example.com. IN A 192.168.x.x
+
+- Wrong DNS server
+cat /etc/resolv.conf
+Cause:If external DNS (e.g., 8.8.8.8) is set instead of internal DNS.
+to fix: Update nameserver to point to internal DNS (nameserver 192.168.1.1)
+
+- Stale DNS cache	
+Cause: If correct record is added but system still can't resolve.
+to fix: sudo systemd-resolve --flush-caches
+
+## Summary of Commands Used:
+
+# Confirm Service
+- sudo systemctl status nginx
+- sudo systemctl status apache2
+- sudo ss -tuln
+
+# DNS Checks
+- nslookup internal.example.com
+- dig internal.example.com
+- nslookup internal.example.com 8.8.8.8
+- cat /etc/resolv.conf
+- cat /etc/hosts
+- sudo systemd-resolve --flush-caches
+
+# Network Checks
+- ping <server-ip>
+- nc -zv <server-ip> 80
+- nc -zv <server-ip> 443
+- curl http://<server-ip>
+
+
 
 
