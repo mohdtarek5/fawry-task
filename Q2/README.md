@@ -49,7 +49,7 @@ curl http://<server-ip>
 3- Service:
 - None service is running fine and responsive
 
-## possible fixes: 
+## Possible fixes: 
 - DNS issues:
 
 - Missing DNS record
@@ -82,10 +82,10 @@ to fix: sudo systemd-resolve --flush-caches
 - sudo systemd-resolve --flush-caches
 
 # Network Checks
-- ping <server-ip>
-- nc -zv <server-ip> 80
-- nc -zv <server-ip> 443
-- curl http://<server-ip>
+- ping 127.0.0.53
+- nc -zv 127.0.0.53 80
+- nc -zv 127.0.0.53 443
+- curl http://127.0.0.53
 
 
 
