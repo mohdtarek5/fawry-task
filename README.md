@@ -52,5 +52,7 @@ To support additional options:
 
 ## Regex, -i, -c, -l support
 
-To support regex, `-i`, `-c`, and `-l` options, I would expand the argument parsing to detect these flags and set appropriate control variables. For regex, I would treat the pattern as a regular expression if specified, using `[[ "$line" =~ $pattern ]]` for matching. The `-i` flag would apply case-insensitive matching, only converting text to lowercase if `-i` is set. The `-c` flag would count the number of matches and output the total, while `-l` would modify the script to loop through multiple files and print only the filenames of those containing matches, rather than the matching lines. The main loop and search logic would adjust dynamically based on these flags.S
+To support regex, `-i`, `-c`, and `-l` options, I would expand the argument parsing to detect these flags and set appropriate control variables. For regex, I would treat the pattern as a regular expression if specified, using `[[ "$line" =~ $pattern ]]` for matching. The `-i` flag would apply case-insensitive matching, only converting text to lowercase if `-i` is set. The `-c` flag would count the number of matches and output the total, while `-l` would modify the script to loop through multiple files and print only the filenames of those containing matches, rather than the matching lines. The main loop and search logic would adjust dynamically based on these flags.
 
+
+![Testing Results](mygrep.png)
