@@ -26,16 +26,16 @@
 
 #if there is time implement bonus task
 
-invertWords=false
-lineNumbers=false
+invertwords=false
+displayline=false
 
 if [[ "$1" =~ ^- ]]; then
     case "$1" in
-    -n) lineNumbers=true ;;
-    -v) invertWords=true ;;
+    -n) displayline=true ;;
+    -v) invertwords=true ;;
     -nv | -vn)
-        lineNumbers=true
-        invertWords=true
+        displayline=true
+        invertwords=true
         ;;
     *)
         echo "Invalid option: $1"
@@ -44,31 +44,37 @@ if [[ "$1" =~ ^- ]]; then
     esac
 fi
 
-echo "Line numbers flag set to: $lineNumbers"
-echo "Invert words flag set to: $invertWords"
+echo "Line numbers flag set to: $displayline"
+echo "Invert words flag set to: $invertwords"
 
-if [[ "$invertWords" == true || "$lineNumbers" == true ]]; then
+if [[ "$invertwords" == true || "$displayline" == true ]]; then
     flag="$1"
-    wordToCheck="$2"
-    fileName="$3"
+    wordtocheck="$2"
+    filename="$3"
     echo "flag: $flag"
-    echo "matching word: $wordToCheck"
-    echo "file name: $fileName"
-    echo "At least one of the flags (invertWords or lineNumbers) is set to true."
+    echo "matching word: $wordtocheck"
+    echo "file name: $filename"
+    echo "At least one of the flags (invertwords or displayline) is set to true."
 else
     flag="none"
-    wordToCheck="$1"
-    fileName="$2"
+    wordtocheck="$1"
+    filename="$2"
     echo "flag: $flag"
-    echo "matching word: $wordToCheck"
-    echo "file name: $fileName"
-    echo "Neither invertWords nor lineNumbers is set to true."
+    echo "matching word: $wordtocheck"
+    echo "file name: $filename"
+    echo "Neither invertwords nor displayline is set to true."
 fi
 
-while IFS= read -r line; do
+linenumber=0
 
-    if [[ "${line,,}" == *"${wordToCheck,,}"* ]]; then
-        echo "Found '$wordToCheck' in line: $line"
+while IFS= read -r line; do
+    ((linenumber++))
+    if [[ "${line,,}" == *"${wordtocheck,,}"* ]]; then
+        if [ "$displayline" = true ]; then
+            echo "Found '$wordtocheck' in line $linenumber; $line "
+        else
+            echo "Found '$wordtocheck' in line $line "
+        fi
 
     fi
-done <"$fileName"
+done <"$filename"
