@@ -44,28 +44,24 @@ if [[ "$1" =~ ^- ]]; then
     esac
 fi
 
+if [ -z "$2" ]; then
+    echo "Error: Missing search string. Please provide a word to search for."
+    exit 1
+fi
+
+wordtocheck="$2"
+filename="$3"
+
+if [ -z "$filename" ]; then
+    echo "Error: Missing filename. Please provide a file to search in."
+    exit 1
+fi
+
 echo "Line numbers flag set to: $displayline"
 echo "Invert words flag set to: $invertwords"
-
-if [[ "$invertwords" = true || "$displayline" = true ]]; then
-
-    flag="$1"
-    wordtocheck="$2"
-    filename="$3"
-    echo "flag: $flag"
-    echo "matching word: $wordtocheck"
-    echo "file name: $filename"
-    echo "At least one of the flags (invertwords or displayline) is set to true."
-else
-
-    flag="none"
-    wordtocheck="$1"
-    filename="$2"
-    echo "flag: $flag"
-    echo "matching word: $wordtocheck"
-    echo "file name: $filename"
-    echo "Neither invertwords nor displayline is set to true."
-fi
+echo "matching word: $wordtocheck"
+echo "file name: $filename"
+echo "At least one of the flags (invertwords or displayline) is set to true."
 
 linenumber=0
 
@@ -86,8 +82,6 @@ fi
 if [ "$invertwords" = true ]; then
     echo "Processing file with invertwords=true..."
     while IFS= read -r line; do
-        ((linenumber++))
-
         if [[ "${line,,}" != *"${wordtocheck,,}"* ]]; then
             if [ "$displayline" = true ]; then
                 echo "in line $linenumber; $line"
