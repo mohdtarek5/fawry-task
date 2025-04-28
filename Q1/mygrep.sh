@@ -13,6 +13,7 @@
 #else if 3 variables 1st is command 2nd is string 3rd filename
 #else error handle
 
+#check if starting with argument by checking for -
 #verify -n, -v, -nv, -vn commands incase they are 3 arguments
 #store commands in separate variable
 #if less than 2 arguments, then exit
@@ -26,10 +27,40 @@
 
 #if there is time implement bonus task
 
+invertWords=false
+lineNumbers=false
 
-if [ "$#" -lt 2 ]; then
-  echo "invalid number of arguments"
-  exit 1
+if [[ "$1" =~ ^- ]]; then
+    case "$1" in
+    -n) lineNumbers=true ;;
+    -v) invertWords=true ;;
+    -nv | -vn)
+        lineNumbers=true
+        invertWords=true
+        ;;
+    *)
+        echo "Invalid option: $1"
+        exit 1
+        ;;
+    esac
 fi
 
+echo "Line numbers flag set to: $lineNumbers"
+echo "Invert words flag set to: $invertWords"
+
+if [[ "$invertWords" == true || "$lineNumbers" == true ]]; then
+    flag="$1"
+    wordToCheck="$2"
+    fileName="$3"
+    echo "flag: $flag"
+    echo "matching word: $wordToCheck"
+    echo "file name: $fileName"
+    echo "At least one of the flags (invertWords or lineNumbers) is set to true."
+else
+    wordToCheck="$1"
+    fileName="$2"
+    echo "matching word: $wordToCheck"
+    echo "file name: $fileName"
+    echo "Neither invertWords nor lineNumbers is set to true."
+fi
 
