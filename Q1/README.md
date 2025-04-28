@@ -3,7 +3,6 @@
 This script implements a custom version of the `grep` command to search for a word in a specified file. 
 
 
-## Usage
 
 ## Syntax
 
