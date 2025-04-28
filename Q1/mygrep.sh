@@ -49,12 +49,12 @@ wordtocheck="$1"
 filename="$2"
 
 if [ -z "$wordtocheck" ]; then
-    echo "Error: Missing search string. Please provide a word to search for."
+    echo "Warning: Missing search string. Please provide a word to search for."
     exit 1
 fi
 
 if [ -z "$filename" ]; then
-    echo "Error: Missing filename. Please provide a file to search in."
+    echo "Warning: Missing filename. Please provide a file to search in."
     exit 1
 fi
 
@@ -75,6 +75,7 @@ fi
 
 if [ "$invertwords" = true ]; then
     while IFS= read -r line; do
+        ((linenumber++))
         if [[ "${line,,}" != *"${wordtocheck,,}"* ]]; then
             if [ "$displayline" = true ]; then
                 echo "in line $linenumber; $line"
